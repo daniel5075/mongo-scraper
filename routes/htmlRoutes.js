@@ -1,27 +1,44 @@
 var db = require("../models");
+let axios = require("axios");
+let cheerio = require("cheerio")
 
-module.exports = function(app) {
-  // Load index page
-  app.get("/", function(req, res) {
-    db.Example.findAll({}).then(function(dbExamples) {
-      res.render("index", {
-        msg: "Welcome!",
-        examples: dbExamples
+module.exports = function (app) {
+
+  app.get("/scrape", function (req, res) {
+    axios.get("http://www.wsj.com/us").then(function (response) {
+      var $ = cheerio.load(response.data);
+
+      $("div.WSJTheme--footer--2ga8Yz85").each(function (i, element) {
+        var result = {};
+
+        // capturing title & link to article
+        result.title = $(this)
+          .children("div")
+          .children("h3")
+          .children("a")
+          .text();
+        result.link = $(this)
+          .children("div")
+          .children("h3")
+          .children("a")
+          .attr("href");
+
+        // capturing synapsis of article
+        result.summary = $(this)
+          .children("p")
+          .text();
+
+        // create an Article
+
+        db.Article.create(result)
+          .then(function (dbArticle) {
+            console.log(dbArticle);
+          })
+          .catch(function (err) {
+            console.log(err);
+          });
       });
     });
+    res.send("Scrape Complete");
   });
-
-  // Load example page and pass in an example by id
-  app.get("/example/:id", function(req, res) {
-    db.Example.findOne({ where: { id: req.params.id } }).then(function(dbExample) {
-      res.render("example", {
-        example: dbExample
-      });
-    });
-  });
-
-  // Render 404 page for any unmatched routes
-  app.get("*", function(req, res) {
-    res.render("404");
-  });
-};
+}
