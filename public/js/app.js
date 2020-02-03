@@ -70,3 +70,15 @@ $(document).on("click", "#savenote", function () {
     $("#titleinput").val("");
     $("#bodyinput").val("");
 });
+// When you click the saveArticle button
+$(document).on("click", "#saveArticle", function () {
+    // Grab the id associated with the article from the submit button
+    var thisId = $(this).attr("data-id");
+
+    // Run a POST request to save the article, using what's entered in the inputs
+    $.ajax({
+        method: "PUT",
+        url: "/articles/" + thisId,
+        data: { saved: true }
+    })
+});
