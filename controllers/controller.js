@@ -57,6 +57,7 @@ router.get("/articles", function (req, res) {
                 article: dbArticle
             }
             console.log(hbsObject);
+            console.log("here");
             res.render("index", hbsObject);
         })
         .catch(function (err) {
