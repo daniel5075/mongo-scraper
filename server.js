@@ -26,10 +26,10 @@ var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoscraperdb
 mongoose.connect(MONGODB_URI, { useNewUrlParser: true });
 
 // Routes
-require("./routes/apiRoutes")(app);
-require("./routes/htmlRoutes")(app);
-
+var routes = require("./controllers/controller.js");
 app.use("/", routes);
+
+
 
 // app.get("/scrape", function (req, res) {
 //     axios.get("http://www.wsj.com/us").then(function (response) {

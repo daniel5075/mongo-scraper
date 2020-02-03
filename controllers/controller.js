@@ -44,13 +44,13 @@ app.get("/scrape", function (req, res) {
                 });
 
         });
-        res.redirect("/articles");
+        res.redirect("/");
     });
 
     // res.send("Scrape Complete");
 });
 
-app.get("/", function (req, res) {
+app.get("/articles", function (req, res) {
     db.Article.find({})
         .then(function (dbArticle) {
             var hbsObject = {
