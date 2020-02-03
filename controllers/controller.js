@@ -1,15 +1,15 @@
 var express = require("express");
 var axios = require("axios");
-var app = express.Router();
-var db = require("../models")
+var router = express.Router();
+var db = require("../models/index.js")
 var path = require("path");
 var cheerio = require("cheerio");
 
-app.get("/", function (req, res) {
+router.get("/", function (req, res) {
     res.redirect("/articles")
 });
 
-app.get("/scrape", function (req, res) {
+router.get("/scrape", function (req, res) {
     axios.get("http://www.wsj.com/us").then(function (response) {
         var $ = cheerio.load(response.data);
 
@@ -50,7 +50,7 @@ app.get("/scrape", function (req, res) {
     // res.send("Scrape Complete");
 });
 
-app.get("/articles", function (req, res) {
+router.get("/articles", function (req, res) {
     db.Article.find({})
         .then(function (dbArticle) {
             var hbsObject = {
@@ -64,4 +64,4 @@ app.get("/articles", function (req, res) {
         });
 });
 
-module.exports = app;
+module.exports = router;
