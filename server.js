@@ -23,7 +23,7 @@ app.set("view engine", "handlebars");
 
 //Connection to MongoDB
 var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoscraperdb";
-mongoose.connect(MONGODB_URI, { useNewUrlParser: true });
+mongoose.connect(MONGODB_URI);
 
 // Routes
 var routes = require("./controllers/controller.js");
