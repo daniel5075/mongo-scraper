@@ -71,14 +71,14 @@ $(document).on("click", "#savenote", function () {
     $("#bodyinput").val("");
 });
 // When you click the saveArticle button
-$(document).on("click", "#saveArticle", function () {
+$(document).on("click", ".saveArticle", function () {
     // Grab the id associated with the article from the submit button
     var thisId = $(this).attr("data-id");
-
+    console.log(thisId)
     // Run a POST request to save the article, using what's entered in the inputs
     $.ajax({
         method: "PUT",
-        url: "/articles/" + thisId,
-        data: { saved: true }
+        url: "/api/articles/" + thisId,
+        data: { 'saved': true }
     })
 });
