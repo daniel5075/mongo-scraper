@@ -77,8 +77,8 @@ $(document).on("click", ".saveArticle", function () {
     console.log(thisId)
     // Run a POST request to save the article, using what's entered in the inputs
     $.ajax({
-        method: "PUT",
-        url: "/api/articles/" + thisId,
+        method: 'PUT',
+        url: '/api/articles/' + thisId,
         data: { 'saved': true }
     })
 });

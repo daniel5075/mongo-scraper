@@ -110,16 +110,18 @@ router.get("/saved", function (req, res) {
 
 // save article to database by changed saved field to true
 router.put("/api/articles/:id", function (req, res) {
-    console.log("saved" + req.body._id)
-    var saved = req.body.saved == 'true'
-    if (saved) {
-        db.Article.updateOne({ _id: req.body._id }, { $set: { saved: true } }, function (err, result) {
-            if (err) {
-                console.log(err)
-            } else {
-                return res.send(true)
-            }
-        });
-    }
+    console.log(req.body)
+    // var saved = req.body.saved == 'true'
+    console.log(req.params.id);
+    // if (saved) {
+    db.Article.updateOne({ _id: req.params.id }, { saved: 'true' }, function (err, result) {
+        if (err) {
+            console.log(err)
+        } else {
+            console.log(result);
+            return res.send(true)
+        }
+    });
+    // }
 });
 module.exports = router;
